@@ -8,7 +8,7 @@ export interface StateGroup {
   names: string[];
 }
 
-export const _filter = (opt: string[], value: string): string[] => {
+export const _filterforstateform = (opt: string[], value: string): string[] => {
   const filterValue = value.toLowerCase();
 
   return opt.filter(item => item.toLowerCase().indexOf(filterValue) === 0);
@@ -23,6 +23,15 @@ export class FormcontrolComponent implements OnInit {
   stateForm: FormGroup = this.fb.group({
     stateGroup: '',
   });
+
+  //code for checkbox-------------------------------
+
+  checked = false;
+  indeterminate = false;
+  labelPosition = 'after';
+  disabled = false;
+
+  //---------------------------------------------
 
 
   stateGroups: StateGroup[] = [{
@@ -92,31 +101,36 @@ export class FormcontrolComponent implements OnInit {
   constructor(private fb: FormBuilder){}
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]>;
+  filteredOptionsautocomplete: Observable<string[]>;
 
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+    this.filteredOptionsautocomplete = this.myControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value))
+      map(value => this._filterforautocomplete(value))
     );
     this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
       .pipe(
         startWith(''),
-        map(value => this._filterGroup(value))
+        map(value => this._filterGroupforstateform(value))
       );
   }
-  private _filter(value: string): string[] {
+  private _filterforautocomplete(value: string): string[] {
     const filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
-  private _filterGroup(value: string): StateGroup[] {
+  private _filterGroupforstateform(value: string): StateGroup[] {
     if (value) {
       return this.stateGroups
-        .map(group => ({letter: group.letter, names: _filter(group.names, value)}))
+        .map(group => ({letter: group.letter, names: _filterforstateform(group.names, value)}))
         .filter(group => group.names.length > 0);
     }
 
     return this.stateGroups;
   }
+
+
+
+
+
 }

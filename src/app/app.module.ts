@@ -8,12 +8,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material';
 import { MaterialModuleModule } from './material-module/material-module.module';
+import { DatepickerComponent } from './datepicker/datepicker.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    FormcontrolComponent
+    FormcontrolComponent,
+    DatepickerComponent
   ],
   imports: [
     BrowserModule,
